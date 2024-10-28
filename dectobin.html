@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decimal to Binary Conversion</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f7f9fc;
+            color: #333;
+            font-size: 18px; /* Increased font size */
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .question {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 20px; /* Increased font size */
+            color: #00796b; /* Changed color */
+        }
+        .code, .output {
+            border: 1px solid #444; /* Darker border */
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            white-space: pre;
+            font-family: monospace; /* Monospace font for code */
+            font-size: 16px; /* Increased font size */
+            background-color: #1e1e1e; /* VS Code dark background */
+            color: #dcdcdc; /* Light text color */
+        }
+        .keyword { color: #569cd6; } /* Keywords */
+        .variable { color: #9cdcfe; } /* Variables */
+        .comment { color: #6a9955; } /* Comments */
+        .number { color: #b5cea8; } /* Numbers */
+        .string { color: #ce9178; } /* Strings */
+        h2 {
+            margin: 0 0 10px;
+            color: #00796b;
+            font-size: 22px; /* Increased font size */
+        }
+        pre {
+            margin: 0; /* Remove margin for better alignment */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="question">
+        Decimal to Binary Conversion in C++
+    </div>
+    <h2>Code:</h2>
+    <div class="code">
+        <code>
+            <span class="comment">// Decimal to Binary Conversion</span><br>
+            <span class="keyword">#include</span> &lt;iostream&gt;<br>
+            <span class="keyword">using</span> namespace std;<br>
+            <span class="keyword">int</span> main() {<br>
+            &nbsp;&nbsp;<span class="variable">int</span> num, i, j, rem[50], len = 0;<br>
+            &nbsp;&nbsp;cout &lt;&lt; <span class="string">"Enter a decimal number: "</span>;<br>
+            &nbsp;&nbsp;cin &gt;&gt; num;<br>
+            &nbsp;&nbsp;<span class="keyword">for</span> (i = 0; num > 1; i++) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;rem[i] = num % 2;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;num = num / 2;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;len++;<br>
+            &nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;rem[i] = num;<br>
+            &nbsp;&nbsp;<span class="keyword">for</span> (j = i; j >= 0; j--) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; rem[j];<br>
+            &nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;<span class="keyword">return</span> 0;<br>
+            }
+        </code>
+    </div>
+    <h2>Output:</h2>
+    <div class="output">
+        <pre>
+Enter a decimal number: 17
+10001
+        </pre>
+    </div>
+</div>
+
+</body>
+</html>

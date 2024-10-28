@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Runge-Kutta Method for ODE</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f7f9fc;
+            color: #333;
+            font-size: 18px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .question {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 20px;
+            color: #00796b;
+        }
+        .code, .output {
+            border: 1px solid #444;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            white-space: pre;
+            font-family: monospace;
+            font-size: 16px;
+            background-color: #1e1e1e;
+            color: #dcdcdc;
+        }
+        .keyword { color: #569cd6; }
+        .variable { color: #9cdcfe; }
+        .comment { color: #6a9955; }
+        .number { color: #b5cea8; }
+        .string { color: #ce9178; }
+        h2 {
+            margin: 0 0 10px;
+            color: #00796b;
+            font-size: 22px;
+        }
+        pre {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="question">
+        Solving dy/dx = x * y
+    </div>
+    <h2>Code:</h2>
+    <div class="code">
+        <code>
+            <span class="keyword">#include</span> &lt;stdio.h&gt;<br>
+            <span class="keyword">float</span> func(<span class="variable">float</span> x, <span class="variable">float</span> y) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return (x * y);<br>
+            }<br>
+            <span class="keyword">float</span> rungaKuttaCalc(<span class="variable">float</span> initX, <span class="variable">float</span> initY, <span class="variable">float</span> h, <span class="variable">float</span> x) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;int i = 0;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;while (initX + h &lt; x) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"Step %d : I = %d\n"</span>, i + 1, i);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"X%d = %f, Y%d = %f\n"</span>, i, initX, i, initY);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;initY += (h / 2) * (func(initX, initY) + func(initX + h, initY + (h * func(initX, initY))));<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;initX += h;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i++;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return initY;<br>
+            }<br>
+            <span class="keyword">int</span> main() {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">float</span> x, y, h, val;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"Enter Initial value of x\n"</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;scanf(<span class="string">"%f"</span>, &amp;x);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"Enter Initial value of y\n"</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;scanf(<span class="string">"%f"</span>, &amp;y);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"Enter height\n"</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;scanf(<span class="string">"%f"</span>, &amp;h);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"Enter value of x to find y\n"</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;scanf(<span class="string">"%f"</span>, &amp;val);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"\nValue of Y when x = %f is %f"</span>, val, rungaKuttaCalc(x, y, h, val));<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return 0;<br>
+            }
+        </code>
+    </div>
+    <h2>Output:</h2>
+    <div class="output">
+        <pre>
+Enter Initial value of x
+1
+Enter Initial value of y
+5
+Enter height
+0.1
+Enter value of x to find y
+1.5
+Step 1 : I = 0
+X0 = 1.000000, Y0 = 5.000000
+Step 2 : I = 1
+X1 = 1.100000, Y1 = 5.552500
+Step 3 : I = 2
+X2 = 1.200000, Y2 = 6.227684
+Step 4 : I = 3
+X3 = 1.300000, Y3 = 7.054720
+
+Value of Y when x = 1.500000 is 8.071305
+        </pre>
+    </div>
+</div>
+
+</body>
+</html>

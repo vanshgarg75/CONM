@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lagrange Interpolation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f7f9fc;
+            color: #333;
+            font-size: 18px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .question {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 20px;
+            color: #00796b;
+        }
+        .code, .output {
+            border: 1px solid #444;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            white-space: pre;
+            font-family: monospace;
+            font-size: 16px;
+            background-color: #1e1e1e;
+            color: #dcdcdc;
+        }
+        .keyword { color: #569cd6; }
+        .variable { color: #9cdcfe; }
+        .comment { color: #6a9955; }
+        .number { color: #b5cea8; }
+        .string { color: #ce9178; }
+        h2 {
+            margin: 0 0 10px;
+            color: #00796b;
+            font-size: 22px;
+        }
+        pre {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="question">
+        Lagrange Interpolation in C
+    </div>
+    <h2>Code:</h2>
+    <div class="code">
+        <code>
+            <span class="keyword">#include</span> &lt;stdio.h&gt;<br>
+            <span class="keyword">#define</span> max 10<br>
+            <br>
+            <span class="keyword">float</span> lagrangianCalc(<span class="variable">float</span> arr[2][max], <span class="variable">int</span> n, <span class="variable">float</span> x) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">float</span> sum = 0, temp;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">int</span> i, j;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;for (i = 0; i &lt; n; i++) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;temp = 1;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(j = 0; j &lt; n; j++) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(i != j)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;temp *= (x-arr[0][j])/(arr[0][i]-arr[0][j]);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sum += (temp*arr[1][i]);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return sum;<br>
+            }<br>
+            <br>
+            <span class="keyword">int</span> main() {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">float</span> arr[2][max], x;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">int</span> i, n;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"Enter number of intervals (upto 10)\n"</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;scanf(<span class="string">"%d"</span>, &amp;n);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;if(n &gt; 10 || n &lt;= 0) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"Invalid intervals\n"</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 0;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;for(i = 0; i &lt; n; i++) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"Enter x%d value: \t"</span>, i);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scanf(<span class="string">"%f"</span>, &amp;arr[0][i]);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"Enter y%d value: \t"</span>, i);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scanf(<span class="string">"%f"</span>, &amp;arr[1][i]);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"Enter the value of x\t"</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;scanf(<span class="string">"%f"</span>, &amp;x);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"y(%f) = %f\n"</span>, x, lagrangianCalc(arr, n, x));<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> 0;<br>
+            }
+        </code>
+    </div>
+    <h2>Output:</h2>
+    <div class="output">
+        <pre>
+Enter number of intervals (upto 10)
+3
+Enter x0 value:   1
+Enter y0 value:   1
+Enter x1 value:   2
+Enter y1 value:   5
+Enter x2 value:   4
+Enter y2 value:   59
+Enter the value of x 3
+y(3.000000) = 24.333334
+        </pre>
+    </div>
+</div>
+
+</body>
+</html>

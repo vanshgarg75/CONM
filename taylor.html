@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polynomial Evaluation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f7f9fc;
+            color: #333;
+            font-size: 18px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .question {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 20px;
+            color: #00796b;
+        }
+        .code, .output {
+            border: 1px solid #444;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            white-space: pre;
+            font-family: monospace;
+            font-size: 16px;
+            background-color: #1e1e1e;
+            color: #dcdcdc;
+        }
+        .keyword { color: #569cd6; }
+        .variable { color: #9cdcfe; }
+        .comment { color: #6a9955; }
+        .number { color: #b5cea8; }
+        .string { color: #ce9178; }
+        h2 {
+            margin: 0 0 10px;
+            color: #00796b;
+            font-size: 22px;
+        }
+        pre {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="question">
+        Polynomial Evaluation and Approximation in C
+    </div>
+    <h2>Code:</h2>
+    <div class="code">
+        <code>
+            <span class="keyword">#include</span> &lt;stdio.h&gt;<br>
+            <span class="keyword">#include</span> &lt;math.h&gt;<br>
+            <span class="keyword">#include</span> &lt;stdlib.h&gt;<br>
+            <br>
+            <span class="keyword">long</span> fact(<span class="variable">int</span> num) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;if (num == 1 || num == 0)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 1;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return num * fact(num - 1);<br>
+            }<br>
+            <br>
+            <span class="keyword">float</span> root(<span class="variable">float</span> coeff[], <span class="variable">int</span> degree, <span class="variable">float</span> x) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;float sum = 0;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;for (int i = degree; i >= 0; i--) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sum += (coeff[i] * pow(x, i));<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return sum;<br>
+            }<br>
+            <br>
+            <span class="keyword">void</span> der(<span class="variable">float</span> *fx, <span class="variable">int</span> degree, <span class="variable">float</span> coeff[], <span class="variable">int</span> temp) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;int i;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;for (i = 1; i <= degree; i++, temp++) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fx[i - 1] = coeff[i] * temp;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            }<br>
+            <br>
+            <span class="keyword">int</span> main() {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;int degree, i;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;float a, b, x, fx[10], coeff[10], temp, h, sol, f_x[10], f__x[10], c, d;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"Enter Highest Degree of Equation:\t"</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;scanf(<span class="string">"%d"</span>, &degree);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;temp = 1;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;for (i = 0; i <= degree; i++) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"Enter Coefficient for x^%d:\t"</span>, i);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scanf(<span class="string">"%f"</span>, &coeff[i]);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"\n Entered Equation:\t"</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;for (i = degree; i >= 0; i--) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (i == 0)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"(%.4f)"</span>, coeff[i]);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"(%.4fx^%d)+"</span>, coeff[i], i);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"\n Enter The Value of x :\t"</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;scanf(<span class="string">"%f"</span>, &x);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"\n Enter The Value of h :\t"</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;scanf(<span class="string">"%f"</span>, &h);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;a = root(coeff, degree, x);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;der(fx, degree, coeff, temp);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;b = root(fx, degree, x);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;der(f_x, degree, fx, temp);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;c = root(f_x, degree, x);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;der(f__x, degree, f_x, temp);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;d = root(f__x, degree, x);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;der(f__x, degree, f_x, temp);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;sol = a + ((h * b) / fact(1)) + ((h * h * c) / fact(2)) + ((h * h * h * d) / fact(3));<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"\nSolution : %.4f"</span>, sol);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> 0;<br>
+            }
+        </code>
+    </div>
+    <h2>Output:</h2>
+    <div class="output">
+        <pre>
+Enter Highest Degree of Equation:	3
+Enter Coefficient for x^0:	5
+Enter Coefficient for x^1:	-2
+Enter Coefficient for x^2:	0
+Enter Coefficient for x^3:	1
+
+ Entered Equation:	(1.0000x^3)+(0.0000x^2)+(-2.0000x^1)+(5.0000)
+ Enter The Value of x :	2
+ Enter The Value of h :	0.001
+
+Solution : 9.0100
+        </

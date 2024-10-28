@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gauss Elimination Method</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f7f9fc;
+            color: #333;
+            font-size: 18px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .question {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 20px;
+            color: #00796b;
+        }
+        .code, .output {
+            border: 1px solid #444;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            white-space: pre;
+            font-family: monospace;
+            font-size: 16px;
+            background-color: #1e1e1e;
+            color: #dcdcdc;
+        }
+        .keyword { color: #569cd6; }
+        .variable { color: #9cdcfe; }
+        .comment { color: #6a9955; }
+        .number { color: #b5cea8; }
+        .string { color: #ce9178; }
+        h2 {
+            margin: 0 0 10px;
+            color: #00796b;
+            font-size: 22px;
+        }
+        pre {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="question">
+        Solving Linear Equations Using Gauss Elimination Method in C
+    </div>
+    <h2>Code:</h2>
+    <div class="code">
+        <code>
+            <span class="keyword">#include</span> &lt;stdio.h&gt;<br>
+            <span class="keyword">#define</span> N 3<br>
+            <br>
+            <span class="keyword">void</span> gaussElimination(<span class="variable">float</span> matrix[N][N + 1], <span class="variable">float</span> result[N]) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;int i, j, k;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;float factor;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;for (i = 0; i &lt; N - 1; i++) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (j = i + 1; j &lt; N; j++) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;factor = matrix[j][i] / matrix[i][i];<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (k = i; k &lt; N + 1; k++) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;matrix[j][k] -= factor * matrix[i][k];<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;for (i = N - 1; i &gt;= 0; i--) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;result[i] = matrix[i][N];<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (j = i + 1; j &lt; N; j++) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;result[i] -= matrix[i][j] * result[j];<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;result[i] /= matrix[i][i];<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            }<br>
+            <br>
+            <span class="keyword">int</span> main() {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">float</span> matrix[N][N + 1], result[N];<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;int i, j;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"Enter the Coefficient Matrix\n"</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;for (i = 0; i &lt; N; i++) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (j = 0; j &lt; N; j++) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"%c%d : "</span>, 97+j, i+1);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scanf(<span class="string">"%f"</span>, &matrix[i][j]);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"Enter the Constant Matrix\n"</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;for (i = 0; i &lt; N; i++) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"%c%d : "</span>, 97+i, i+1);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scanf(<span class="string">"%f"</span>, &matrix[i][N]);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;gaussElimination(matrix, result);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"Solution:\n"</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;for (i = 0; i &lt; N; i++) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"x%d = %f\t"</span>, i + 1, result[i]);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> 0;<br>
+            }
+        </code>
+    </div>
+    <h2>Output:</h2>
+    <div class="output">
+        <pre>
+Enter the Coefficient Matrix
+a1: 3
+b1: 4
+c1: 5
+a2: 2
+b2: -3
+c2: 4
+a3: 1
+b3: 1
+c3: 1
+Enter the Constant Matrix
+a1: 40
+b2: 13
+c3: 9
+Solution:
+x1 = 1.000000    x2 = 3.000000    x3 = 5.000000
+        </pre>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secant Method for Root Finding</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f7f9fc;
+            color: #333;
+            font-size: 18px; /* Increased font size */
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .question {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 20px; /* Increased font size */
+            color: #00796b; /* Changed color */
+        }
+        .code, .output {
+            border: 1px solid #444; /* Darker border */
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            white-space: pre;
+            font-family: monospace; /* Monospace font for code */
+            font-size: 16px; /* Increased font size */
+            background-color: #1e1e1e; /* VS Code dark background */
+            color: #dcdcdc; /* Light text color */
+        }
+        .keyword { color: #569cd6; } /* Keywords */
+        .variable { color: #9cdcfe; } /* Variables */
+        .comment { color: #6a9955; } /* Comments */
+        .number { color: #b5cea8; } /* Numbers */
+        .string { color: #ce9178; } /* Strings */
+        h2 {
+            margin: 0 0 10px;
+            color: #00796b;
+            font-size: 22px; /* Increased font size */
+        }
+        pre {
+            margin: 0; /* Remove margin for better alignment */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="question">
+        Solving Equation x³ + x – 10 Using Secant Method in C
+    </div>
+    <h2>Code:</h2>
+    <div class="code">
+        <code>
+            <span class="keyword">#include</span> &lt;stdio.h&gt;<br>
+            <span class="keyword">#include</span> &lt;math.h&gt;<br>
+            <br>
+            <span class="keyword">float</span> func(<span class="variable">float</span> x) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return (x*x*x + x - 10);<br>
+            }<br>
+            <br>
+            <span class="keyword">float</span> secCalc(<span class="variable">float</span> a, <span class="variable">float</span> b) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">float</span> x = a, prevX;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;unsigned <span class="variable">int</span> iter = 1;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;do {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>(func(x) == 0)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return x;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>(func(a) * func(x) &lt; 0)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b = x;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a = x;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;prevX = x;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x = (a - (func(a) * ((b - a) / (func(b) - func(a)))));<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"After %d iterations "</span>, iter);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"a = %f and b = %f\n"</span>, a, b);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"x%d = %f \t f(x%d) = %f\n"</span>, iter, x, iter, func(x));<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;iter++;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;} <span class="keyword">while</span>(fabs(prevX - x) > 0.02);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return x;<br>
+            }<br>
+            <br>
+            <span class="keyword">int</span> main() {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">float</span> a, b;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"Enter the first approximation of the root: \n"</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;scanf(<span class="string">"%f"</span>, &a);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"Enter the second approximation of the root: \n"</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;scanf(<span class="string">"%f"</span>, &b);<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>(func(a) == 0)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"The approximation of the root is: %f \n "</span>, a);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else if</span>(func(b) == 0)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"The approximation of the root is: %f \n "</span>, b);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else if</span>(func(a) * func(b) &gt; 0)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"Root Does Not Lie Between Given Approximations\n"</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"The approximate root is %f"</span>, secCalc(a, b));<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> 0;<br>
+            }
+        </code>
+    </div>
+    <h2>Output:</h2>
+    <div class="output">
+        <pre>
+Enter the first approximation of the root: 1
+Enter the second approximation of the root: 2
+After 1 iterations a = 1.000000 and b = 2.000000
+x1 = 1.714286    f(x1) = -3.077884
+After 2 iterations a = 1.714286 and b = 2.000000
+x2 = 1.838531    f(x2) = -0.412799
+After 3 iterations a = 1.838531 and b = 2.000000
+x3 = 1.853636    f(x3) = -0.047770
+The approximate root is 1.853636
+        </pre>
+    </div>
+</div>
+
+</body>
+</html>

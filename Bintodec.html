@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binary to Decimal Conversion</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f7f9fc;
+            color: #333;
+            font-size: 18px; /* Increased font size */
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .question {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 20px; /* Increased font size */
+            color: #00796b; /* Changed color */
+        }
+        .code, .output {
+            border: 1px solid #444; /* Darker border */
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            white-space: pre;
+            font-family: monospace; /* Monospace font for code */
+            font-size: 16px; /* Increased font size */
+            background-color: #1e1e1e; /* VS Code dark background */
+            color: #dcdcdc; /* Light text color */
+        }
+        .keyword { color: #569cd6; } /* Keywords */
+        .variable { color: #9cdcfe; } /* Variables */
+        .comment { color: #6a9955; } /* Comments */
+        .number { color: #b5cea8; } /* Numbers */
+        .string { color: #ce9178; } /* Strings */
+        h2 {
+            margin: 0 0 10px;
+            color: #00796b;
+            font-size: 22px; /* Increased font size */
+        }
+        pre {
+            margin: 0; /* Remove margin for better alignment */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="question">
+        Binary to Decimal Conversion in C++
+    </div>
+    <h2>Code:</h2>
+    <div class="code">
+        <code>
+            <span class="comment">// Binary to Decimal Conversion</span><br>
+            <span class="keyword">#include</span> &lt;iostream&gt;<br>
+            <span class="keyword">#include</span> &lt;math.h&gt;<br>
+            <span class="keyword">using</span> namespace std;<br>
+            <span class="keyword">int</span> main() {<br>
+            &nbsp;&nbsp;<span class="variable">int</span> bin, i, dec = 0, x, y, num;<br>
+            &nbsp;&nbsp;cout &lt;&lt; <span class="string">"Enter binary number: "</span>;<br>
+            &nbsp;&nbsp;cin &gt;&gt; bin;<br>
+            &nbsp;&nbsp;num = bin;<br>
+            &nbsp;&nbsp;<span class="keyword">for</span> (i = 0; bin >= 1; i++) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;x = bin % 10;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;bin = bin / 10;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;y = x * pow(2, i);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;dec = dec + y;<br>
+            &nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;cout &lt;&lt; <span class="string">"Decimal value of "</span> &lt;&lt; num &lt;&lt; <span class="string">" is "</span> &lt;&lt; dec;<br>
+            }
+        </code>
+    </div>
+    <h2>Output:</h2>
+    <div class="output">
+        <pre>
+Enter binary number: 1010
+Decimal value of 1010 is 10
+        </pre>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bisection Method for Root Finding</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f7f9fc;
+            color: #333;
+            font-size: 18px; /* Increased font size */
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .question {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 20px; /* Increased font size */
+            color: #00796b; /* Changed color */
+        }
+        .code, .output {
+            border: 1px solid #444; /* Darker border */
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            white-space: pre;
+            font-family: monospace; /* Monospace font for code */
+            font-size: 16px; /* Increased font size */
+            background-color: #1e1e1e; /* VS Code dark background */
+            color: #dcdcdc; /* Light text color */
+        }
+        .keyword { color: #569cd6; } /* Keywords */
+        .variable { color: #9cdcfe; } /* Variables */
+        .comment { color: #6a9955; } /* Comments */
+        .number { color: #b5cea8; } /* Numbers */
+        .string { color: #ce9178; } /* Strings */
+        h2 {
+            margin: 0 0 10px;
+            color: #00796b;
+            font-size: 22px; /* Increased font size */
+        }
+        pre {
+            margin: 0; /* Remove margin for better alignment */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="question">
+        Solving Equation x³ – x – 1 Using Bisection Method in C
+    </div>
+    <h2>Code:</h2>
+    <div class="code">
+        <code>
+            <span class="keyword">#include</span> &lt;stdio.h&gt;<br>
+            <span class="keyword">#include</span> &lt;math.h&gt;<br>
+            <br>
+            <span class="keyword">float</span> func(<span class="variable">float</span> x) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return (x*x*x - x - 1);<br>
+            }<br>
+            <br>
+            <span class="keyword">int</span> main() {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">float</span> l1, l2, r;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;unsigned <span class="variable">int</span> iter = 1;<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"Enter the first approximation of the root: \n"</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;scanf(<span class="string">"%f"</span>, &l1);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"Enter the second approximation of the root: \n"</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;scanf(<span class="string">"%f"</span>, &l2);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;r = l1;<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>(func(l1) == 0)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"The approximation of the root is: %f \n "</span>, l1);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else if</span>(func(l2) == 0)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"The approximation of the root is: %f \n "</span>, l2);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else if</span>(func(l1)*func(l2) > 0)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"Root Does Not Lie Between Given Approximations\n"</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span> {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;do {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>(func(r) == 0)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>(func(l1)*func(r) < 0)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;l2 = r;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else if</span>(func(r)*func(l2) < 0)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;l1 = r;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;r = (l1 + l2) / 2.0;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"After %d iterations "</span>, iter);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"a = %f and b = %f\n"</span>, l1, l2);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"x%d = %f\tf(x%d) = %f\n"</span>, iter, r, iter, func(r));<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;iter++;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <span class="keyword">while</span>(fabs(l2-l1) > 0.02);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"\nThe approximation of the root is: %f \n"</span>, r);<br>
+            }<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> 0;<br>
+            }
+        </code>
+    </div>
+    <h2>Output:</h2>
+    <div class="output">
+        <pre>
+Enter the first approximation of the root: 
+1
+Enter the second approximation of the root: 
+2
+After 1 iterations a = 1.000000 and b = 2.000000
+x1 = 1.500000    f(x1) = 0.875000
+After 2 iterations a = 1.000000 and b = 1.500000
+x2 = 1.250000    f(x2) = -0.296875
+After 3 iterations a = 1.250000 and b = 1.500000
+x3 = 1.375000    f(x3) = 0.224609
+After 4 iterations a = 1.250000 and b = 1.375000
+x4 = 1.312500    f(x4) = -0.051514
+After 5 iterations a = 1.312500 and b = 1.375000
+x5 = 1.343750    f(x5) = 0.082611
+After 6 iterations a = 1.312500 and b = 1.343750
+x6 = 1.328125    f(x6) = 0.014576
+After 7 iterations a = 1.312500 and b = 1.328125
+x7 = 1.320312    f(x7) = -0.018711
+The approximation of the root is: 1.320312 
+        </pre>
+    </div>
+</div>
+
+</body>
+</html>

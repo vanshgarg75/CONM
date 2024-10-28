@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newton Divided Difference Interpolation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f7f9fc;
+            color: #333;
+            font-size: 18px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .question {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 20px;
+            color: #00796b;
+        }
+        .code, .output {
+            border: 1px solid #444;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            white-space: pre;
+            font-family: monospace;
+            font-size: 16px;
+            background-color: #1e1e1e;
+            color: #dcdcdc;
+        }
+        .keyword { color: #569cd6; }
+        .variable { color: #9cdcfe; }
+        .comment { color: #6a9955; }
+        .number { color: #b5cea8; }
+        .string { color: #ce9178; }
+        h2 {
+            margin: 0 0 10px;
+            color: #00796b;
+            font-size: 22px;
+        }
+        pre {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="question">
+        Newton Divided Difference Interpolation in C
+    </div>
+    <h2>Code:</h2>
+    <div class="code">
+        <code>
+            <span class="keyword">#include</span> &lt;stdio.h&gt;<br>
+            <br>
+            <span class="keyword">void</span> calculateCoefficients(<span class="variable">double</span> x[], <span class="variable">double</span> y[], <span class="variable">int</span> n, <span class="variable">double</span> coeff[]) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;for (int i = 0; i &lt; n; i++) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;coeff[i] = y[i];<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;for (int j = 1; j &lt; n; j++) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (int i = n - 1; i &gt;= j; i--) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;coeff[i] =(coeff[i] - coeff[i - 1])/(x[i] - x[i - j]);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            }<br>
+            <br>
+            <span class="keyword">double</span> interpolate(<span class="variable">double</span> x[], <span class="variable">double</span> coeff[], <span class="variable">int</span> n, <span class="variable">double</span> xVal) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">double</span> result = coeff[n - 1];<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;for (int i = n - 2; i &gt;= 0; i--) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;result = result * (xVal - x[i]) + coeff[i];<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return result;<br>
+            }<br>
+            <br>
+            <span class="keyword">int</span> main() {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">int</span> n;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"Enter the number of data points: "</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;scanf(<span class="string">"%d"</span>, &amp;n);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">double</span> x[n], y[n];<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;for (int i = 0; i &lt; n; i++) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"Enter the data points (x, y):\n"</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scanf(<span class="string">"%lf %lf"</span>, &amp;x[i], &amp;y[i]);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            <span class="keyword">/*</span> Newton Divided Difference Interpolation <span class="keyword">*/</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">double</span> coeff[n];<br>
+            calculateCoefficients(x, y, n, coeff);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"Enter the value to interpolate: "</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">double</span> xVal;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;scanf(<span class="string">"%lf"</span>, &amp;xVal);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">double</span> interpolatedValue = interpolate(x, coeff, n, xVal);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"Interpolated value at %lf is %lf\n"</span>, xVal, interpolatedValue);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> 0;<br>
+            }
+        </code>
+    </div>
+    <h2>Output:</h2>
+    <div class="output">
+        <pre>
+Enter the number of data points: 3
+Enter the data points (x, y):
+1.5 -0.25
+Enter the data points (x, y):
+3 2
+Enter the data points (x, y):
+6 20
+Enter the value to interpolate: 4
+Interpolated value at 4.000000 is 6.000000
+        </pre>
+    </div>
+</div>
+
+</body>
+</html>

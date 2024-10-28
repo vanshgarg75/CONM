@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newton Forward Interpolation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f7f9fc;
+            color: #333;
+            font-size: 18px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .question {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 20px;
+            color: #00796b;
+        }
+        .code, .output {
+            border: 1px solid #444;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            white-space: pre;
+            font-family: monospace;
+            font-size: 16px;
+            background-color: #1e1e1e;
+            color: #dcdcdc;
+        }
+        .keyword { color: #569cd6; }
+        .variable { color: #9cdcfe; }
+        .comment { color: #6a9955; }
+        .number { color: #b5cea8; }
+        .string { color: #ce9178; }
+        h2 {
+            margin: 0 0 10px;
+            color: #00796b;
+            font-size: 22px;
+        }
+        pre {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="question">
+        Newton Forward Interpolation in C
+    </div>
+    <h2>Code:</h2>
+    <div class="code">
+        <code>
+            <span class="keyword">#include</span> &lt;stdio.h&gt;<br>
+            <span class="keyword">#define</span> MaxSize 10<br>
+            <br>
+            <span class="keyword">long</span> fact(<span class="variable">int</span> n) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;if (n == 0 || n == 1)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 1;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return n * fact(n - 1);<br>
+            }<br>
+            <br>
+            <span class="keyword">float</span> newtonFor(<span class="variable">float</span> arr[MaxSize][MaxSize], <span class="variable">float</span> x, <span class="variable">int</span> n) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">float</span> res, u, prod = 1;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">int</span> i, j;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;for (i = 1; i &lt; n; i++) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (j = 0; j &lt; n - i; j++) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;arr[i + 1][j] = arr[i][j + 1] - arr[i][j];<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;res = arr[1][0];<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;u = (x-arr[0][0])/(arr[0][1]-arr[0][0]);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;for (i = 0; i &lt; n-1; i++) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;prod = 1;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (j = 0; j &lt;= i; j++) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;prod *= (u-j);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;prod *= (arr[i+2][0]/fact(i+1));<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;res += prod;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return res;<br>
+            }<br>
+            <br>
+            <span class="keyword">int</span> main() {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">/*</span> Newton Forward Interpolation <span class="keyword">*/</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">float</span> arr[MaxSize][MaxSize], x;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">int</span> n, i;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"Enter number of intervals (upto 10)\n"</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;scanf(<span class="string">"%d"</span>, &amp;n);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;if(n &gt; 10 || n &lt;= 0) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"Invalid intervals\n"</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 0;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;for(i = 0; i &lt; n; i++) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"Enter x%d value: \t"</span>, i);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scanf(<span class="string">"%f"</span>, &amp;arr[0][i]);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"Enter y%d value: \t"</span>, i);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scanf(<span class="string">"%f"</span>, &amp;arr[1][i]);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"Enter the value of x\t"</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;scanf(<span class="string">"%f"</span>, &amp;x);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"\nValue at f(%f) = %f"</span>, x, newtonFor(arr, x, n));<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> 0;<br>
+            }
+        </code>
+    </div>
+    <h2>Output:</h2>
+    <div class="output">
+        <pre>
+Enter number of intervals (upto 10)
+3
+Enter x0 value:   2
+Enter y0 value:   6.6
+Enter x1 value:   3
+Enter y1 value:   9.2
+Enter x2 value:   4
+Enter y2 value:   8.6
+Enter the value of x 2.8
+Value at f(2.800000) = 8.935999
+        </pre>
+    </div>
+</div>
+
+</body>
+</html>

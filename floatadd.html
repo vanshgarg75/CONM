@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Floating Point Addition</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f7f9fc;
+            color: #333;
+            font-size: 18px; /* Increased font size */
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .question {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 20px; /* Increased font size */
+            color: #00796b; /* Changed color */
+        }
+        .code, .output {
+            border: 1px solid #444; /* Darker border */
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            white-space: pre;
+            font-family: monospace; /* Monospace font for code */
+            font-size: 16px; /* Increased font size */
+            background-color: #1e1e1e; /* VS Code dark background */
+            color: #dcdcdc; /* Light text color */
+        }
+        .keyword { color: #569cd6; } /* Keywords */
+        .variable { color: #9cdcfe; } /* Variables */
+        .comment { color: #6a9955; } /* Comments */
+        .number { color: #b5cea8; } /* Numbers */
+        .string { color: #ce9178; } /* Strings */
+        h2 {
+            margin: 0 0 10px;
+            color: #00796b;
+            font-size: 22px; /* Increased font size */
+        }
+        pre {
+            margin: 0; /* Remove margin for better alignment */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="question">
+        Floating Point Addition in C
+    </div>
+    <h2>Code:</h2>
+    <div class="code">
+        <code>
+            <span class="keyword">#include</span> &lt;stdio.h&gt;<br>
+            <br>
+            <span class="keyword">void</span> converter(<span class="variable">float</span> num, <span class="variable">float</span> *number, <span class="variable">int</span> *exponent) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;*number = num;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;*exponent = 0;<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">while</span> ((<span class="variable">int</span>)(*number) != 0) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*number /= 10;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(*exponent)++;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            }<br>
+            <br>
+            <span class="keyword">void</span> adder(<span class="variable">float</span> first, <span class="variable">float</span> second, <span class="variable">float</span> *result_number, <span class="variable">int</span> *result_exponent) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">float</span> p1_number, p2_number;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">int</span> p1_exponent, p2_exponent;<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;converter(first, &p1_number, &p1_exponent);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;converter(second, &p2_number, &p2_exponent);<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">while</span> (p1_exponent != p2_exponent) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span> (p1_exponent < p2_exponent) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p1_number /= 10;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p1_exponent++;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span> {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p2_number /= 10;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p2_exponent++;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;*result_number = p1_number + p2_number;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;*result_exponent = p1_exponent;<br>
+            }<br>
+            <br>
+            <span class="keyword">int</span> main() {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">float</span> first, second, result_number;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">int</span> result_exponent;<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"Enter two floating point numbers (a b): "</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;scanf(<span class="string">"%f %f"</span>, &first, &second);<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;adder(first, second, &result_number, &result_exponent);<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"%.6f + %.6f = %.6fE%d\n"</span>, first, second, result_number, result_exponent);<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> 0;<br>
+            }
+        </code>
+    </div>
+    <h2>Output:</h2>
+    <div class="output">
+        <pre>
+Enter two floating point numbers (a b): 12345.6 789.01
+12345.599609 + 789.010010 = 0.131346E5
+        </pre>
+    </div>
+</div>
+
+</body>
+</html>

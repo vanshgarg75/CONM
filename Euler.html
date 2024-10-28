@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Euler's Method for ODE</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f7f9fc;
+            color: #333;
+            font-size: 18px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .question {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 20px;
+            color: #00796b;
+        }
+        .code, .output {
+            border: 1px solid #444;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            white-space: pre;
+            font-family: monospace;
+            font-size: 16px;
+            background-color: #1e1e1e;
+            color: #dcdcdc;
+        }
+        .keyword { color: #569cd6; }
+        .variable { color: #9cdcfe; }
+        .comment { color: #6a9955; }
+        .number { color: #b5cea8; }
+        .string { color: #ce9178; }
+        h2 {
+            margin: 0 0 10px;
+            color: #00796b;
+            font-size: 22px;
+        }
+        pre {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="question">
+        Solving dy/dx = (y - x) / (y + x)
+    </div>
+    <h2>Code:</h2>
+    <div class="code">
+        <code>
+            <span class="keyword">#include</span> &lt;stdio.h&gt;<br>
+            <span class="keyword">float</span> func(<span class="variable">float</span> x, <span class="variable">float</span> y) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return ((y - x) / (y + x));<br>
+            }<br>
+            <span class="keyword">float</span> eularCalc(<span class="variable">float</span> initX, <span class="variable">float</span> initY, <span class="variable">float</span> h, <span class="variable">float</span> x) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;int i = 0;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;while (initX + h &lt; x) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"Step %d : I = %d\n"</span>, i + 1, i);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"X%d = %f, Y%d = %f\n"</span>, i, initX, i, initY);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;initY = initY + h * func(initX, initY);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;initX += h;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i++;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return initY;<br>
+            }<br>
+            <span class="keyword">int</span> main() {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">float</span> x, y, h, val;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"Enter Initial value of x\n"</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;scanf(<span class="string">"%f"</span>, &amp;x);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"Enter Initial value of y\n"</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;scanf(<span class="string">"%f"</span>, &amp;y);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"Enter height\n"</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;scanf(<span class="string">"%f"</span>, &amp;h);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"Enter value of x to find y\n"</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;scanf(<span class="string">"%f"</span>, &amp;val);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="string">"\nValue of Y when x = %f is %f"</span>, val, eularCalc(x, y, h, val));<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return 0;<br>
+            }
+        </code>
+    </div>
+    <h2>Output:</h2>
+    <div class="output">
+        <pre>
+Enter Initial value of x
+0
+Enter Initial value of y
+1
+Enter height
+0.02
+Enter value of x to find y
+0.1
+Step 1 : I = 0
+X0 = 0.000000, Y0 = 1.000000
+Step 2 : I = 1
+X1 = 0.020000, Y1 = 1.020000
+Step 3 : I = 2
+X2 = 0.040000, Y2 = 1.039231
+Step 4 : I = 3
+X3 = 0.060000, Y3 = 1.057748
+Step 5 : I = 4
+X4 = 0.080000, Y4 = 1.075601
+
+Value of Y when x = 0.100000 is 1.092832
+        </pre>
+    </div>
+</div>
+
+</body>
+</html>
